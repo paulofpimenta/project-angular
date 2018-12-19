@@ -15,10 +15,14 @@ import { ItemStudentsComponent } from './students/item-students/item-students.co
 import { EditStudentsComponent } from './students/edit-students/edit-students.component';
 import { ListEvaluationsComponent } from './evaluations/list-evaluations/list-evaluations.component';
 import { EditEvalutionComponent } from './evaluations/edit-evalution/edit-evalution.component';
+import { EvaluationStudentComponent } from './students/evaluation-student/evaluation-student.component';
 import { FormsModule } from '@angular/forms';
+
 //Services
 import { StudentsService, StudentsServiceImpl } from '../service/students.service';
 import { EvaluationService, EvaluationServiceImpl } from 'src/service/evaluation.service';
+import { AssignmentServiceImpl, AssignmentService } from 'src/service/assigment.service';
+
 
 // PrimeNg
 import {CardModule} from 'primeng/card';
@@ -29,7 +33,14 @@ import {ToastModule} from 'primeng/toast';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {MenuItem} from 'primeng/api';
 import {MenuModule} from 'primeng/menu';
-import { EvaluationStudentComponent } from './students/evaluation-student/evaluation-student.component';
+import {TabViewModule} from 'primeng/tabview';
+import {ChartModule} from 'primeng/chart';
+
+
+//D3
+import { DoughnutChartComponent, PieChartComponent, BarChartComponent } from 'angular-d3-charts';
+
+
 
 @NgModule({
   declarations: [
@@ -43,8 +54,9 @@ import { EvaluationStudentComponent } from './students/evaluation-student/evalua
     ListEvaluationsComponent,
     EditEvalutionComponent,
     EvaluationStudentComponent,
-    
-
+    DoughnutChartComponent, 
+    PieChartComponent, 
+    BarChartComponent 
   ],
   imports: [
     BrowserModule,
@@ -59,10 +71,15 @@ import { EvaluationStudentComponent } from './students/evaluation-student/evalua
     ToastModule,
     TabMenuModule,
     MenuModule,
+    TabViewModule,
+    ChartModule
+
   ],
   providers: [
     {provide: StudentsService, useClass: StudentsServiceImpl},
     {provide: EvaluationService, useClass: EvaluationServiceImpl},
+    {provide: AssignmentService, useClass: AssignmentServiceImpl},
+
     ConfirmationService
     ],
   bootstrap: [AppComponent]

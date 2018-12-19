@@ -1,3 +1,25 @@
-<p>
-  evaluation-student works!
-</p>
+
+<div *ngIf="evaluations; else noevaluation " class="ui-g-12 ui-md-12 ui-lg-6">
+    <table class="table table-sm table-hover">
+                <thead class="thead-dark">
+                <tr>
+                  <th>Grade</th>
+                  <th>Coef</th>
+                  <th>Date</th>
+                  <th>Note</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr routerLink="/evaluations/{{e.id}}"
+                    *ngFor="let e of evaluations">
+                  <td>{{e.grade}}</td>
+                  <td>{{e.coef}}</td>
+                  <td>{{e.date | date:'medium'}}</td>
+                  <td>{{e.notes}}</td>
+                  <!--<td><i routerLink="/car/{{c.id}}/edit" class="fa fa-pencil" aria-hidden="true"></i></td>-->
+                </tr>
+              </tbody>
+      </table>
+      <ng-template #noevaluation>No evaluation found</ng-template>
+  </div>
+  

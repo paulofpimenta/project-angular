@@ -3,6 +3,7 @@ import { Student } from 'src/model/student';
 import * as mockData   from './mock-data';
 import { Evaluation } from 'src/model/evaluation';
 import { Guid } from 'guid-typescript';
+import { Assignment } from 'src/model/assignment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export abstract class EvaluationService {
     abstract deleteEvaluation(id: any): Promise<void>;
     abstract insertEvaluation(e: Evaluation): Promise<Evaluation>;
     abstract updateEvaluation(e: Evaluation): Promise<Evaluation>;
+    abstract getEvaluationsPerStudent(studentId: Guid): Promise<{evaluation:Evaluation, assignment:Assignment}[]>;
 }
 
 export class EvaluationServiceImpl implements EvaluationService {
@@ -21,8 +23,14 @@ export class EvaluationServiceImpl implements EvaluationService {
 getEvaluations(): Promise<Evaluation[]> {
   return Promise.resolve(mockData.evaluations);
 }
-getEvaluationsPerStudent(studentId: Guid): Promise<Evaluation[]> {
-  return Promise.resolve(mockData.evaluations.filter(e => e.studentId == studentId));
+getEvaluationsPerStudent(studentId: Guid): Promise<{evaluation:Evaluation, assignment:Assignment}[]> {
+  return Promise.resolve(mockData.evaluations.filter(e => e.studentId == studentId)
+    .map(e=>{ return {
+      evaluation:e,
+      assignment:mockData.assignments.find(c=>c.id==e.assignmentId)
+    }})
+    
+  );
 }
 getEvaluation(id: any): Promise<Evaluation> {
   return Promise.resolve(mockData.evaluations.find( e => e.id == id));
@@ -55,4 +63,6 @@ updateEvaluation(e: Evaluation): Promise<Evaluation> {
       return Promise.reject(new Error('The evaluation does not exists'));
   }
 }
+
+
 }
