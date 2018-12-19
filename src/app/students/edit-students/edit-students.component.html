@@ -1,0 +1,76 @@
+
+<p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
+
+<div *ngIf="student" class="ui-g-12 ui-md-12 ui-lg-12 container ">
+    {{student | json}}
+    {{evaluations | json}}
+    <h1> Modify a Student </h1>
+    
+    <div class="row card ui-g-6 ui-md-6 ui-lg-6">
+            
+            <img class="img-fluid ui-g-2 ui-md-2 ui-lg-1" [src]="student.photo" style="width:200px;height:200px;margin:10px;float:left" />
+        
+            <form (ngSubmit)="sendToServer()" #myform ="ngForm" ngForm>
+              <!--Name-->
+              <div class="form-group ui-g-6 ui-md-6 ui-lg-6 text-left">
+                  <label for="studentName">Student's name</label>
+                  <input  #studentname = "ngModel" required maxlength="50" pattern="[A-Z][a-z]{1,49}" type="text" name="studentName" id="studentName" 
+                        class="form-control"  [(ngModel)]="student.name" 
+                        placeholder="Student's name">
+                        <small *ngIf="studentname.errors?.required" class= "text-danger"> A name must be provided</small>
+                        <small *ngIf="studentname.errors?.pattern" class= "text-danger"> A name must start with an uppercase letter</small>
+                        <small *ngIf="studentname.errors?.maxlength" class= "text-danger"> A name must have a maximum of 50 letters</small>
+            
+              </div>
+              <!--Surname-->
+              <div class="form-group ui-g-6 ui-md-6 ui-lg-6 text-left">
+                  <label for="modelcar">Surname</label>
+                  <input type="text" name="modelcar" id="modelcar" 
+                            [(ngModel)]="student.surname"
+                            class="form-control" placeholder="Car model">
+              </div>
+              <!--Class Name-->
+              <div class="form-group ui-g-6 ui-md-6 ui-lg-6 text-left">
+                  <label for="className">Class name</label>
+                  <input type="text" name="className" id="className" 
+                          [(ngModel)]="student.classname"
+                          class="form-control" placeholder="Class name">
+              </div>
+
+              <div class="form-group ui-g-6 ui-md-6 ui-lg-6 text-left">
+                <input class="btn btn-primary" type="submit" value="Validate">
+              </div>
+            </form>
+
+  </div>  
+ </div>
+  <h2>Grades</h2>
+  <hr style="height: 10px"/>
+  
+ <div *ngIf="evaluations" class="ui-g-12 ui-md-12 ui-lg-12">
+
+    <table class="table table-sm table-hover">
+              <thead class="thead-dark">
+              <tr>
+                <th>Student</th>
+                <th>Grade</th>
+                <th>Coef</th>
+                <th>Date</th>
+                <th>Note</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr routerLink="/evaluations/{{e.id}}"
+                  *ngFor="let e of evaluations">
+                <td>{{student.name}}</td>
+                <td>{{e.grade}}</td>
+                <td>{{e.coef}}</td>
+                <td>{{e.date | date:'medium'}}</td>
+                <td>{{e.notes}}</td>
+                <!--<td><i routerLink="/car/{{c.id}}/edit" class="fa fa-pencil" aria-hidden="true"></i></td>-->
+              </tr>
+            </tbody>
+    </table>
+
+    <ng-template #noevaluation>other content here...</ng-template>
+</div>

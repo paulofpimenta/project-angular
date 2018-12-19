@@ -1,0 +1,30 @@
+
+<div class="container text-center">
+    <p-messages [value]="msgs"></p-messages>
+
+    <div class="row">
+        <div class="ui-g-12 ui-md-6 ui-lg-4" routerLink="/student/{{s.id}}"
+        *ngFor="let s of students">
+        <p-card header="{{s.name}} {{s.surname}}" subheader="Student" [style]="{width: '300px'}" style="margin: 1px;" 
+        styleClass="ui-card-shadow">
+            <p-header>
+                <img src="{{s.photo}}" style="width: 150px; height: 120px; margin-top:10px">
+            </p-header>
+            <div>Name : <b>{{s.name}}</b></div>
+            <div>Surname : <b>{{s.surname}}</b></div>
+            <div>Class name : <b>{{s.classname}}</b></div>
+            <p-footer>
+                <!--Edit button-->
+                <button class="ui-button-info" pButton type="button" label="Edit" icon="pi pi-pencil"
+                style="margin-right: .25em" routerLink="/student/edit/{{s.id}}"></button>
+                <!--Delete button-->
+                <button type="button" class="ui-button-danger" (click)="confirm(s)" pButton icon="pi pi-times" label="Delete"></button>
+
+                <!--<button pButton type="button" label="Delete" icon="pi pi-times" class="ui-button-secondary"></button>-->
+            </p-footer>
+          </p-card>
+        </div>
+       
+    </div>
+    <p-confirmDialog [style]="{width: '425px'}"></p-confirmDialog>
+</div>
