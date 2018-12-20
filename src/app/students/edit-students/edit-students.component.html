@@ -84,7 +84,8 @@
           <ng-template #noevaluation><b>No evaluation found</b></ng-template>
     </p-tabPanel>
     <p-tabPanel header="Statistics">
-        <button pButton pButton (click)="updateChart()" type="button" label="Regenerate" class="ui-button-rounded"></button>
-        <p-chart type="radar" [data]="data"></p-chart>
+        
+        <button pButton pButton (click)="radarChart()" type="button" label="Regenerate" class="ui-button-rounded"></button>
+        <p-chart type="horizontalBar" [data]="data"></p-chart>
       </p-tabPanel>
 </p-tabView>

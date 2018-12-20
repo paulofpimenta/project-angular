@@ -8,7 +8,6 @@ import { EvaluationService } from 'src/service/evaluation.service';
 import { MenuItem } from 'primeng/api';
 import { Assignment } from 'src/model/assignment';
 import { AssignmentService } from 'src/service/assigment.service';
-import { evaluations } from 'src/service/mock-data';
 
 @Component({
   selector: 'app-edit-students',
@@ -26,13 +25,13 @@ export class EditStudentsComponent implements OnInit {
   student:Student;
 
   evaluations:Evaluation[];
-  assingments:Assignment[];
+  assignments:Assignment[];
   all:{evaluation:Evaluation, assignment:Assignment}[];
 
 
   items:MenuItem[];
   data: any;
-
+  options: any;
   
   ngOnInit() {
     console.log('The component is visible');
@@ -54,55 +53,78 @@ export class EditStudentsComponent implements OnInit {
               console.log("IDS : " + evalIds + " Count : " + evalIds.length);
               // Send the list of ids to service
               this.assignmentService.getAssignmentsByEvaluations(evalIds).then( asgns => {
-                this.assingments = asgns;
+                this.assignments = asgns;
+                this.radarChart();
               }); 
               this.evaluationService.getEvaluationsPerStudent(id).then( asgns => {
                 this.all = asgns;
+              
               }); 
-              console.log("asng : " +  this.assingments);
+              console.log("assingments : " +  this.assignments);
             } else{
-              this.assingments = undefined;
+                this.assignments = undefined;
             }
           });
         });
-      }  else{
-        this.student = undefined;
+
+      }  else {
+            this.student = undefined;
       }
+  
     });
-    this.updateChart();
+    
     
   }
   sendToServer(){
     this.studentService.updateStudent(this.student);
     this.location.back();
 }
-  updateChart(){
-    let ass
-    this.data  = {
-      labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-      datasets: [
-          {
-              label: 'My First dataset',
-              backgroundColor: 'rgba(179,181,198,0.2)',
-              borderColor: 'rgba(179,181,198,1)',
-              pointBackgroundColor: 'rgba(179,181,198,1)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgba(179,181,198,1)',
-              data: [65, 59, 90, 81, 56, 55, 40]
-          },
-          {
-              label: 'My Second dataset',
-              backgroundColor: 'rgba(255,99,132,0.2)',
-              borderColor: 'rgba(255,99,132,1)',
-              pointBackgroundColor: 'rgba(255,99,132,1)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgba(255,99,132,1)',
-              data: [28, 48, 40, 19, 96, 27, 100]
+  radarChart(){
+      const labelsChart = this.assignments.map(l=>l.coursename);
+      const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+      const coursenames = this.assignments.map(c=> c.coursename);
+      const labelsMonth = this.evaluations.map(m => monthNames[m.date.getMonth()]+'/'+m.date.getFullYear())
+      const gradesChart = this.evaluations.map(l=>l.grade);
+      console.log("grades" + gradesChart);
+      const mydataset = [];
+      this.evaluations.forEach( e=> {
+                    mydataset.push ({
+                        label: this.assignments.find(c=> c.id== e.assignmentId).coursename, 
+                        //label:[coursenames],
+                        backgroundColor: ['rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)'],
+                        borderColor: ['rgba(255,99,132,1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)'],
+                        pointBackgroundColor: 'rgba(179,181,198,1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#ffff',
+                        pointHoverBorderColor: 'rgba(179,181,198,1)',
+                        data: gradesChart,
+                      })
+      });
+      //console.log("mydataset: " +  mydataset['data']);
+
+      this.data  = {
+        labels: labelsMonth,
+        datasets: mydataset
+      };
+      this.options={
+        title: {
+          display: true,
+          text: 'My Title',
+          fontSize: 16,
+          type: 'horizontalBar',
+          scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
           }
-      ]
-  };
-    
+
+      }};   
   }
 }

@@ -27,7 +27,7 @@ getEvaluationsPerStudent(studentId: Guid): Promise<{evaluation:Evaluation, assig
   return Promise.resolve(mockData.evaluations.filter(e => e.studentId == studentId)
     .map(e=>{ return {
       evaluation:e,
-      assignment:mockData.assignments.find(c=>c.id==e.assignmentId)
+      assignment:mockData.assignments.find( c=>c.id==e.assignmentId )
     }})
     
   );
