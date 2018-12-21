@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
+
 //Components
 import { AppComponent } from './app.component';
 import { AssignmentsComponent } from './assignments/assignments.component';
@@ -35,6 +34,9 @@ import {MenuItem} from 'primeng/api';
 import {MenuModule} from 'primeng/menu';
 import {TabViewModule} from 'primeng/tabview';
 import {ChartModule} from 'primeng/chart';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {DialogModule} from 'primeng/dialog';
 
 
 //D3
@@ -73,7 +75,8 @@ import { ListAssignmentsComponent } from './assignments/list-assignments/list-as
     TabMenuModule,
     MenuModule,
     TabViewModule,
-    ChartModule
+    ChartModule,
+    DialogModule
 
   ],
   providers: [

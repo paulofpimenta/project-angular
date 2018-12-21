@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EvaluationService } from 'src/service/evaluation.service';
 
 @Component({
   selector: 'app-edit-evalution',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditEvalutionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private serviceEval: EvaluationService) { }
 
   ngOnInit() {
   }

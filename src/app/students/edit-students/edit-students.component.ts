@@ -27,7 +27,9 @@ export class EditStudentsComponent implements OnInit {
   evaluations:Evaluation[];
   assignments:Assignment[];
   all:{evaluation:Evaluation, assignment:Assignment}[];
-
+  
+  //dialog display
+  display:boolean = false;  
 
   items:MenuItem[];
   data: any;
@@ -38,7 +40,6 @@ export class EditStudentsComponent implements OnInit {
 
     //Menu items
 
-
     this.activatedRoute.params.subscribe( (params) => {
       let id = params.id;
       if(id){
@@ -46,40 +47,36 @@ export class EditStudentsComponent implements OnInit {
           this.student = v;
           this.studentService.getStudentEvaluations(id).then( evals=> {
             this.evaluations = evals;
-          
-            if(this.evaluations.length > 0){
+            if(this.evaluations.length > 0) {
               // A list of ids from evaluations
               let evalIds = this.evaluations.map(a => a.id);
               console.log("IDS : " + evalIds + " Count : " + evalIds.length);
               // Send the list of ids to service
               this.assignmentService.getAssignmentsByEvaluations(evalIds).then( asgns => {
                 this.assignments = asgns;
-                this.radarChart();
               }); 
               this.evaluationService.getEvaluationsPerStudent(id).then( asgns => {
                 this.all = asgns;
                 this.radarChart();
-              
               }); 
               console.log("assingments : " +  this.assignments);
-            } else{
+            } else {
                 this.assignments = undefined;
             }
           });
         });
-
       }  else {
             this.student = undefined;
       }
-  
     });
-    
-    
   }
+  showDialog() {
+    this.display = true;
+  } 
   sendToServer(){
     this.studentService.updateStudent(this.student);
     this.location.back();
-}
+  }
   radarChart(){
       const labelsChart = this.assignments.map(l=>l.coursename);
       const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -130,7 +127,7 @@ export class EditStudentsComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Disclines',
+          text: 'Disciplines',
           fontSize: 16,
           type: 'horizontalBar',
         }

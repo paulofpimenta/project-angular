@@ -57,8 +57,40 @@
         </div>
 
     </p-tabPanel>
-    <p-tabPanel header="Grades" leftIcon="pi pi-list">
-        <h2>Grades</h2>
+    <p-tabPanel header="Grades" leftIcon="pi pi-list">      
+        <div>
+            <h2 style="display: block;">Grades </h2>
+            <p-dialog header="Add grade for" [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '500px', minWidth: '500px'}" [minY]="70" 
+            [maximizable]="true" [baseZIndex]="10000">
+            <span><table class="table">
+                <thead>
+                    <tr>
+                        <th>Grade</th>
+                        <th>Coef</th>
+                        <th>Prof</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table></span>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Save"></button>
+                <button type="button" pButton icon="pi pi-close" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+            </p-footer>
+    </p-dialog>
+            <button type="button" pButton icon="fa fa-plus" (click)="showDialog()" label="Add"></button>
+        </div>        
+
         <hr style="height: 10px"/>
         <div *ngIf="evaluations && evaluations.length > 0; else noevaluation " class="">
             <table class="table table-sm table-hover">
@@ -78,7 +110,7 @@
                           <td>{{e.evaluation.coef}}</td>
                           <td>{{e.evaluation.date | date:'medium'}}</td>
                           <td>{{e.evaluation.notes}}</td>
-                           <td>{{e.assignment.teachersurname}}</td>
+                           <td>Mr.(s) {{e.assignment.teachersurname}}</td>
                           <!--<td><i routerLink="/car/{{c.id}}/edit" class="fa fa-pencil" aria-hidden="true"></i></td>-->
                         </tr>
                       </tbody>
@@ -88,8 +120,14 @@
           <ng-template #noevaluation><b>No evaluation found</b></ng-template>
     </p-tabPanel>
     <p-tabPanel  leftIcon="pi pi-chart-bar" header="Statistics" >
-        
-        <button pButton pButton (click)="radarChart()" type="button" label="Regenerate" class="ui-button-rounded"></button>
-        <p-chart type="horizontalBar" [data]="data" [options]="options"></p-chart>
+        <div *ngIf="evaluations && evaluations.length > 0; else noevaluation ">
+            <p-chart type="horizontalBar" [data]="data" [options]="options"></p-chart>
+            <p-dialog header="Title" [(visible)]="display">
+                    Content
+                </p-dialog>
+            <button pButton pButton (click)="showDialog()" type="button" label="Regenerate" class=""></button>
+        </div>
+        <ng-template #noevaluation><b>No evaluation found</b></ng-template>
       </p-tabPanel>
+
 </p-tabView>
