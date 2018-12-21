@@ -58,6 +58,7 @@ export class EditStudentsComponent implements OnInit {
               }); 
               this.evaluationService.getEvaluationsPerStudent(id).then( asgns => {
                 this.all = asgns;
+                this.radarChart();
               
               }); 
               console.log("assingments : " +  this.assignments);
@@ -88,23 +89,28 @@ export class EditStudentsComponent implements OnInit {
       const gradesChart = this.evaluations.map(l=>l.grade);
       console.log("grades" + gradesChart);
       const mydataset = [];
-      this.evaluations.forEach( e=> {
+      //this.all.forEach( (a,i)=> {
                     mydataset.push ({
-                        label: this.assignments.find(c=> c.id== e.assignmentId).coursename, 
-                        //label:[coursenames],
+                        //label: this.all.map(a => a.evaluation.date.getFullYear()),
+                        label:coursenames[0],
+                        //label: "Disciplines",
                         backgroundColor: ['rgba(255, 99, 132, 0.2)',
                                             'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)'],
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(150, 206, 78, 0.2)',
+                                            'rgba(12, 105, 86, 0.2)'],
                         borderColor: ['rgba(255,99,132,1)',
                                         'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)'],
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(150, 206, 78, 0.2)',
+                                        'rgba(12, 105, 86, 0.2)'],
                         pointBackgroundColor: 'rgba(179,181,198,1)',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#ffff',
                         pointHoverBorderColor: 'rgba(179,181,198,1)',
-                        data: gradesChart,
+                        data: this.all.map(a => a.evaluation.grade),
                       })
-      });
+      //});
       //console.log("mydataset: " +  mydataset['data']);
 
       this.data  = {
@@ -112,19 +118,22 @@ export class EditStudentsComponent implements OnInit {
         datasets: mydataset
       };
       this.options={
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+          }]
+        },
         title: {
           display: true,
-          text: 'My Title',
+          text: 'Disclines',
           fontSize: 16,
           type: 'horizontalBar',
-          scales: {
-            xAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-          }
-
-      }};   
+        }
+      };   
   }
 }

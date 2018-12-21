@@ -1,14 +1,20 @@
 
-  <!--{{student | json}}-->
+  <!--{{student | json}}
   <p> Evaluations :  {{evaluations | json}}</p>
   <br>
   <p> Assignments : {{assingments | json}} </p>
 
+    <br>
+  <p> Evals : {{evaluations | json}} </p>
+
   <br>
-  <p> All : {{all | json}} </p>
-  
-<p-tabView>
-    <p-tabPanel *ngIf="student" header="Info">
+  <p> All : {{all | json}} </p>-->
+    <div>
+       <!-- <i class="pi pi-user" style="font-size: 3em"></i><h1 style="display:inline-block">{{student.name}} {{student.surname}}</h1>-->
+    </div>
+
+    <p-tabView>
+    <p-tabPanel *ngIf="student" leftIcon="pi pi-info-circle" header="Details/Edit">
         <div clas="p-grid">
         
         <div class= "p-col-12 p-md-6 p-lg-3" style="display: inline-block;position: relative;vertical-align: top;">
@@ -51,7 +57,7 @@
         </div>
 
     </p-tabPanel>
-    <p-tabPanel header="Grades">
+    <p-tabPanel header="Grades" leftIcon="pi pi-list">
         <h2>Grades</h2>
         <hr style="height: 10px"/>
         <div *ngIf="evaluations && evaluations.length > 0; else noevaluation " class="">
@@ -63,7 +69,6 @@
                           <th>Date</th>
                           <th>Note</th>
                           <th>Teacher</th>
-                          <th>Surname Teacher</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,10 +76,9 @@
                             *ngFor="let e of all">
                           <td>{{e.evaluation.grade}}</td>
                           <td>{{e.evaluation.coef}}</td>
-                          <td>{{e.assignment.teachersurname}}</td>
                           <td>{{e.evaluation.date | date:'medium'}}</td>
                           <td>{{e.evaluation.notes}}</td>
-                          <td>{{e.assignment.teachername}}</td>
+                           <td>{{e.assignment.teachersurname}}</td>
                           <!--<td><i routerLink="/car/{{c.id}}/edit" class="fa fa-pencil" aria-hidden="true"></i></td>-->
                         </tr>
                       </tbody>
@@ -83,9 +87,9 @@
           </div> 
           <ng-template #noevaluation><b>No evaluation found</b></ng-template>
     </p-tabPanel>
-    <p-tabPanel header="Statistics">
+    <p-tabPanel  leftIcon="pi pi-chart-bar" header="Statistics" >
         
         <button pButton pButton (click)="radarChart()" type="button" label="Regenerate" class="ui-button-rounded"></button>
-        <p-chart type="horizontalBar" [data]="data"></p-chart>
+        <p-chart type="horizontalBar" [data]="data" [options]="options"></p-chart>
       </p-tabPanel>
 </p-tabView>

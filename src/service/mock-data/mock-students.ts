@@ -3,8 +3,8 @@ import { Guid } from 'guid-typescript';
 
 export const STUDENTS: Student [] = [
     new Student('Mickey', 'Mouse', 'A1','mickey-mouse.jpg'),
-    new Student('John', 'Connor', 'A2','john-conor.jpg'),
-    new Student('Al', 'Pacino', 'B1'),
+    new Student('Jaques', 'Brel', 'A2','jaques-brel.jpg'),
+    new Student('Claude', 'François','B2','claude-francois.jpg',),
     new Student('Tony', 'Montana', 'B1','tony-montana.jpg'),
     new Student('Rocky', 'Balboa', 'B1','rocky-balboa.jpg'),
     new Student('Leonardo', 'DiCaprio', 'B2','leonardo-dicaprio.jpg'),

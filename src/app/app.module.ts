@@ -39,6 +39,7 @@ import {ChartModule} from 'primeng/chart';
 
 //D3
 import { DoughnutChartComponent, PieChartComponent, BarChartComponent } from 'angular-d3-charts';
+import { ListAssignmentsComponent } from './assignments/list-assignments/list-assignments.component';
 
 
 
@@ -56,7 +57,7 @@ import { DoughnutChartComponent, PieChartComponent, BarChartComponent } from 'an
     EvaluationStudentComponent,
     DoughnutChartComponent, 
     PieChartComponent, 
-    BarChartComponent 
+    BarChartComponent, ListAssignmentsComponent 
   ],
   imports: [
     BrowserModule,

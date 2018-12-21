@@ -7,6 +7,7 @@ import { EditStudentsComponent } from './students/edit-students/edit-students.co
 import { ListEvaluationsComponent } from './evaluations/list-evaluations/list-evaluations.component';
 import { EvaluationStudentComponent } from './students/evaluation-student/evaluation-student.component';
 import { AssignmentsComponent } from './assignments/assignments.component';
+import { ListAssignmentsComponent } from './assignments/list-assignments/list-assignments.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
   {path: 'student/edit/:id', component: EditStudentsComponent},
   {path: 'evaluations', component: ListEvaluationsComponent},
   {path: 'student/evaluation/:id', component: EvaluationStudentComponent},
-  {path: 'assignments', component: AssignmentsComponent},
+  {path: 'assignments', component: ListAssignmentsComponent},
 
 
   
